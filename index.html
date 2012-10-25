@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CSS Preprocessors - SASS, LESS and Stylus</title>
+
+		<meta name="description" content="Slides introducing and comparing the 3 most popular CSS preprocessors.">
+		<meta name="author" content="Patrick Arlt">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/patrickarlt.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<script type="text/javascript" src="//use.typekit.net/blr3gpc.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section data-state="title">
+					<h1 class="push">CSS Preprocessors</h1>
+					<h3>Sass, Less and Stylus</h3>
+					<h4 class="push">Patrick Arlt - @patrickarlt</h4>
+				</section>
+
+				<section>
+					<h2>Some Background</h2>
+					<p>I'm an Application Engineer at <span style="text-decoration: strikethrough">Geoloqi</span> Esri.</p>
+					<p>Design and User Experiance</p>
+					<p>HTML, CSS, JS, lots of it everyday...</p>
+				</section>
+
+				<section>
+					<h2>Ok Ok, which is best?</h2>
+					<div class="fragment">
+						<h4>Really Short Answer</h4>
+						<p>SASS or Stylus</p>
+					</div>
+					<div class="fragment">
+						<h4>Slightly Longer Answer</h4>
+						<p>SASS if you are using Ruby. Stylus if you using Node. LESS if you afraid of the command line.</p>
+					</div>
+				</section>
+
+				<section>
+					<h2>80/20</h2>
+					<p class="fragment">80% of SASS, LESS and Stylus is the same.</p>
+					<p class="fragment">The 20% that is different is in advanced usage.</p>
+				</section>
+
+				<section>
+					<h2>Installing</h2>
+					<div class="fragment">
+						<h5>SASS</h5>
+						<pre><code>$ gem install sass
+$ sass --watch style.scss:style.css</code></pre>
+					</div>
+					<div class="fragment">
+						<h5>LESS</h5>
+						<pre><code>&lt;link rel=&quot;stylesheet/less&quot; type=&quot;text/css&quot; href=&quot;styles.less&quot;&gt;<br/>&lt;script src=&quot;less.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+						<pre><code>$ npm install less
+$ lessc styles.less</code></pre>
+					</div>
+					<div class="fragment">
+						<h5>Stylus</h5>
+						<pre><code>$ npm install stylus
+$ stylus css --watch</code></pre>
+					</div>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">The 80%</h1>
+					<p>Variables</p>
+					<p>Color Transformation</p>
+					<p>Mixins</p>
+					<p>Nesting</p>
+					<p>Loops &amp; Conditionals</p>
+					<p>Importing</p>
+				</section>
+
+				<section>
+					<h2>Variables</h2>
+					<h5>SASS</h5>
+					<pre><code class="css">$button-background: #27adec;
+.btn {
+  background: $button-background;
+}</code></pre>
+					<h5>LESS</h5>
+					<pre><code class="css">@button-background: #27adec;
+.btn {
+  background: @button-background;
+}</code></pre>
+					<h5>Stylus</h5>
+					<pre><code class="css">button-background = #27adec
+.btn
+  background button-background
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Color Transformations</h2>
+						<h5>SASS</h5>
+						<pre><code>lighten(@color, 10%);</code></pre>
+						<h5>LESS</h5>
+						<pre><code>mix($dark-blue, $light-blue, 25%);</code></pre>
+						<h5>Stylus</h5>
+						<pre><code>body
+  color: #444 + #111;</code></pre>
+				</section>
+
+				<section>
+					<h2>LESS Mixins</h2>
+					<div style="width: 50%; float: left;">
+						<pre><code class="css">.bordered {
+  border: 1px solid #000;
+  border-top-color: #444;
+  border-bottom-color: #444;
+}
+
+#main {
+  .bordered;
+}
+</code></pre>
+						<p>Without Params</p>
+					</div>
+					<div style="width: 50%; float: right;">
+					<pre><code class="css">.border-radius (@r) {
+  -webkit-border-radius: @r;
+  -moz-border-radius: @r;
+  border-radius: @r;
+}
+
+#main {
+  .border-radius(4px);
+}
+</code></pre>
+<p>With Params</p>
+</div>
+				</section>
+
+				<section>
+					<h2>SASS Mixins</h2>
+					<pre><code class="css">@mixin border-radius ($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+#main {
+  @include border-radius(4px);
+}</code></pre>
+				</section>
+
+				<section>
+						<h2>Stylus Mixins</h2>
+						<pre><code class="css">border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+#main
+  border-radius(5px)</code></pre>
+				</section>
+
+				<section>
+					<h2>Nesting</h2>
+					<p>You can nest selectors in all three frameworks.</p>
+					<pre><code>#main{
+  margin: 0 auto;
+
+  .title {
+    font-size: 4em;
+  }
+  
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>Imports</h2>
+					All 3 support importing from other files or libraries...
+					<pre><code>@import "compass/css3";
+@import "susy";
+@import "animation/animate";
+@import "myfile.scss";
+
+#main {
+  @include border-radius(5px); // from compass/css3
+  @include span-columns(10); // from susy
+  @include animation(fadeIn); // from animation/animate
+  background: $background-color; // from myfile.scss
+}
+
+#sidebar {
+  @include span-columns(2 omega); // from susy
+}
+
+</code></pre>
+				</section>
+
+				<section>
+					<h2>More Features</h2>
+					<ul class="fragment">
+						<li>Conditionals like "if, "when"</li>
+						<li>MATH!</li>
+					</ul>
+					<div class="fragment">
+						<h3 class="push">SASS and Stylus</h3>
+						<ul class="fragment">
+							<li>Loops like "for", "while", and "each"</li>
+							<li>Much more depth then LESS</li>
+							<li>Custom functions without the Ruby/JS API</li>
+						</ul>
+					</div>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">The 20%</h1>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">SASS</h1>
+					<p>@extend</p>
+					<p>@media</p>
+					<p>@content</p>
+				</section>
+
+				<section>
+					<h2>@extend</h2>
+					<pre><code>.button {
+  background: $blue;
+  color: #fff						
+}
+
+.my-special-button {
+  @extend .button;
+  font-size: 2em;
+}</code></pre>
+<pre class="fragment"><code>.button, .my-special-button {
+  background: $blue;
+  color: #fff						
+}
+
+.my-special-button {
+  font-size: 2em;
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>@extend Selectors</h2>
+
+					<pre><code>// This won't be compiled
+#context a%extreme {
+  color: red;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.notice {
+  @extend %extreme;
+}</code></pre>
+<pre class="fragment"><code>#content a.notice {
+  color: $red;
+  font-weight: bold;
+  font-size: 2em;
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>@media</h2>
+					<p>Declare media queries inside selectors</p>
+					<pre><code>#content {
+  width: 65%;
+  margin: 0 auto;
+  @media only screen and (max-width : 767px) {
+    width: 90%;
+  }
+}</code></pre>
+					<pre class="fragment"><code>#content {
+  width: 65%;
+  margin: 0 auto;
+}
+@media only screen and (max-device-width : 768px) {
+  #content {
+    width: 90%;
+  }
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>@content</h2>
+					<p>My favorite SASS feature. Lets you pass whole style blocks into mixins. Similar to Rubys "yeild". Use it for...</p>
+					<ul>
+						<li class="fragment">Media Query Helpers</li>
+						<li class="fragment">Retina Images</li>
+						<li class="fragment">IE Specific Styles</li>
+						<li class="fragment">CSS3 Polyfills</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>@content Example</h2>
+					<pre class="fragment"><code>&lt;!--[if IE 7 ]&gt;&lt;html class=&quot;ie ie7&quot; lang=&quot;en&quot;&gt;&lt;![endif]--&gt;<br/>&lt;!--[if IE 8 ]&gt;&lt;html class=&quot;ie ie8&quot; lang=&quot;en&quot;&gt;&lt;![endif]--&gt;<br/>&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;&lt;html lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</code></pre>
+					<pre class="fragment"><code>@mixin for-ie(){
+  html.ie {
+    @content;
+  }
+}</code></pre>
+					<pre class="fragment"><code>#browser-warning {
+  display:none;
+  @include for-ie(){
+    display:block
+  }
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>Compass</h2>
+					<p><a href="http://compass-style.org/">Compass</a> makes SASS even more awesome</p>
+					<ul>
+						<li class="fragment">CSS3 mixins, supports almost every CSS3 feature</li>
+						<li class="fragment">Typography styling helpers</li>
+						<li class="fragment">Generates CSS sprites</li>
+						<li class="fragment">Produces cross browser CSS for IE6,7,8</li>
+						<li class="fragment">Plugin framework via Rubygems
+							<ul>
+								<li><a href="https://github.com/hecbuma/compass-bootstrap">Compass Bootstrap</a></li>
+								<li><a href="http://foundation.zurb.com/">Foundation Framework</a></li>
+								<li><a href="http://susy.oddbird.net/">Susy - Responsive Grids</a></li>
+								<li><a href="https://github.com/ericam/compass-animation">Compass Animation</a></li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">LESS</h1>
+					<p>Mixins</p>
+					<p>Namespaces</p>
+					<p>Scoped Variables</p>
+					<p>Client Side Processing</p>
+					
+				</section>
+
+				<section>
+					<h2>Mixins</h2>
+					<p>In LESS every class is a mixin</p>
+					<pre><code class="css">.clearfix() {
+  zoom: 1;
+  &amp;:before { content: ''; display: block; }
+  &amp;:after { content: ''; display: table; clear: both; }
+}
+
+#content {
+  .clearfix();
+}
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Namespaceing Mixins</h2>
+					<p>Organize your mixins into namespaces</p>
+					<pre><code class="css">#my-framework {
+  .button () {
+    display: block;
+    border: 1px solid @dark-blue;
+    background-color: @blue;
+    color: @light-blue;
+  }
+}
+
+.a-button {
+  #my-framework > .button;
+}
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Scoped Variables</h2>
+					<p>Variables have scope which makes them it easy to override </p>
+					<pre><code class="css">@text-color: #444;
+@background-color: #fafafa;
+
+body {
+  color: @text-color;
+  background: @background-color;
+}
+
+.inverse {
+  @text-color: #fafafa;
+  @background-color: #444;
+  color: @text-color;
+  background: @background-color;	
+}
+
+h1 { color: @text-color + #111; }
+
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Client-Side Compiling</h2>
+					<ul>
+						<li class="fragment">Great for static HTML sites</li>
+						<li class="fragment">Sites where you don't have a real server (S3)</li>
+						<li class="fragment">You can evaluate Javascript in your .less files</li>
+					</ul>
+
+					<div class="fragment">
+						<h4>Evalute Javascipt</h4>
+						<p>You can evalute a javascript expression as a variable</p>
+					</div>
+
+					<pre class="fragment"><code>@height: `document.body.clientHeight`;
+@width: `document.body.clientWidth`;
+</code></pre>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">Stylus</h1>
+					<p>Syntax</p>
+					<p>Language Features</p>
+					<p>@keyframes</p>
+					<p>Javascript API</p>
+				</section>
+
+				<section>
+					<h2>Stylus Syntax</h2>
+					<ul>
+						<li class="fragment">Whitespace Based</li>
+						<li class="fragment">Can omit { : ; }</li>
+					</ul>
+					<pre class="fragment"><code>border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+  
+body
+  font 12px Helvetica, Arial, sans-serif
+  
+a.button
+  border-radius(5px)</code></pre>
+  <p class="fragment">The biggest problem I have with Stylus is with its syntax</p>
+				</section>
+
+				<section>
+					<h2>Stylus Language</h2>
+					<p>Stylus feels very much like a simple programming language</p>
+					<ul>
+						<li class="fragment">Ruby-like ranges [1..5], [0...5]</li>
+						<li class="fragment">for/in loops</li>
+						<li class="fragment">real operator precidence</li>
+						<li class="fragment">complex conditionals if/else if/else, unless/else, postfix conditionals</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>@keyframe Support</h2>
+					<p>CSS3 keyframes are awesome, Stylus makes then easy</p>
+					<pre><code>@keyframes pulse
+  0%, 100%
+    -webkit-transform translateX(0);
+  
+  20%, 60%
+    -webkit-transform translateX(-10px);
+
+  40%, 80%
+    -webkit-transform translateX(10px);</code></pre>
+					<p class="fragment">This is awesome!</p>
+				</section>
+
+				<section>
+					<h2>Javascript API</h2>
+					<p>You could do a whole talk on the Stylus API, here are some ideas...</p>
+					<ul>
+						<li class="fragment">Declare <i>really</i> custom functions</li>
+						<li class="fragment">Use Node modules like canvas</li>
+						<li class="fragment">Do Compass-like sprite generation</li>
+						<li class="fragment">Create your own CSS framework</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Nib</h2>
+					<ul>
+						<li class="fragment">CSS3 helpers - gradiants, border-radius, ect...</li>
+						<li class="fragment">Mixins for common css patterns</li>
+						<li class="fragment">Extends CSS with new properties and values</li>
+					</ul>
+					<pre class="fragment"><code>#feedback
+  fixed: bottom right</code></pre>
+					<pre class="fragment"><code>#logo
+  image: '/img/logo.png'</code></pre>
+				  <pre class="fragment"><code>h1
+  overflow: ellipsis</code></pre>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push fragment">Smackdown!</h1>
+					<h3 class="push fragment">Who Wins?</h3>
+				</section>
+
+				<section>
+					<h2>LESS Looses</h2>
+					<p>LESS just doesn't have the features or power of SASS or Stylus</p>
+					<ul>
+						<li class="fragment">Nothing like Compass or Nib</li>
+						<li class="fragment">No plugin system</li>
+						<li class="fragment">Can't define your own functions with just LESS</li>
+						<li class="fragment">Doesn't output any debugging info</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>SASS vs. Stylus</h2>
+					<p>Both have similar features, a powerful plugin ecosystem, and lots of CSS3 helpers.</p>
+					<ul>
+						<li class="fragment">SASS syntax is close to CSS</li>
+						<li class="fragment">Stylus is closer to a programming language</li>
+						<li class="fragment">If you use Ruby you will probally use SASS</li>
+						<li class="fragment">If you use Node you will probally use Stylus</li>
+					</ul>
+				</section>
+
+				<section data-state="title">
+					<h1 class="push">Questions</h1>
+					<h4>Patrick Arlt - @patrickarlt</h4>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>
