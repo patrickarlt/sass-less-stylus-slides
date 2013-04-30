@@ -15,7 +15,6 @@
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/patrickarlt.css" id="theme">
 
-
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
@@ -330,7 +329,7 @@ $ stylus css --watch</code></pre>
 					<h2>@content Example</h2>
 					<pre class="fragment"><code>&lt;!--[if IE 7 ]&gt;&lt;html class=&quot;ie ie7&quot; lang=&quot;en&quot;&gt;&lt;![endif]--&gt;<br/>&lt;!--[if IE 8 ]&gt;&lt;html class=&quot;ie ie8&quot; lang=&quot;en&quot;&gt;&lt;![endif]--&gt;<br/>&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;&lt;html lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</code></pre>
 					<pre class="fragment"><code>@mixin for-ie(){
-  html.ie {
+  html.ie &{
     @content;
   }
 }</code></pre>
